@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Upload } from '../models/upload.model';
 import { UploadService } from '../services/upload.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-upload',
@@ -14,7 +15,7 @@ export class UploadComponent implements OnInit {
 
   private fileToUpload: File | null = null;
 
-  constructor(private formBuilder: FormBuilder, private uploadService: UploadService) { }
+  constructor(private formBuilder: FormBuilder, private uploadService: UploadService, private router: Router) { }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -41,14 +42,22 @@ export class UploadComponent implements OnInit {
     formInput.file = this.fileToUpload;
   
     this.uploadService.upload(formInput).subscribe({
-      next: response => console.log('Upload successful', response),
-      error: error => console.log('Upload failed', error),
+      next: response => {
+        console.log('Upload successful', response);
+        // Assuming the response is an object with a bundleId property
+        this.router.navigate(['display', response.bundleId]);
+      },
+      error: error => {
+        console.log('Upload failed', error);
+        alert(`Upload failed: ${error.message}`);
+      },
     });
-  }
+  }  
 
   onCancel() {
     console.log('Form cancelled');
-    // remeber to replace this with the actual function to reset the form or navigate to another view
+    // remember to replace this with the actual function to reset the form or navigate to another view
   }
 }
+
 

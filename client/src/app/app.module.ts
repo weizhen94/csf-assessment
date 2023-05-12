@@ -6,12 +6,14 @@ import { AppComponent } from './app.component';
 import { UploadComponent } from './components/upload.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { DisplayComponent } from './components/display.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    UploadComponent
+    UploadComponent,
+    DisplayComponent
   ],
   imports: [
     BrowserModule,

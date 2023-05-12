@@ -7,6 +7,8 @@ import java.util.UUID;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -51,11 +53,17 @@ public class ArchiveRepository {
 	// You are free to change the parameter and the return type
 	// Do not change the method's name
 	// Write the native mongo query that you will be using in this method
-	//
-	//
-	public Object getBundleByBundleId(/* any number of parameters here */) {
-		return null;
+	/*
+	db.archives.find({
+    "bundleId" : "bundleId"
+    })
+	 */
+	public Object getBundleByBundleId(String bundleId) {
+		Query query = new Query();
+		query.addCriteria(Criteria.where("bundleId").is(bundleId));
+		return mongoTemplate.findOne(query, Object.class, "archives");
 	}
+	
 
 	//TODO: Task 6
 	// You are free to change the parameter and the return type

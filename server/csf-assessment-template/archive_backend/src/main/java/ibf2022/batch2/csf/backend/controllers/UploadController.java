@@ -7,6 +7,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,12 +54,21 @@ public class UploadController {
         }
     }
 
-
-
-
-
 	// TODO: Task 5
-	
+	@GetMapping("/bundle/{bundleId}")
+    public ResponseEntity<Object> getBundle(@PathVariable("bundleId") String bundleId) {
+    try {
+        Object bundle = archiveRepository.getBundleByBundleId(bundleId);
+        if (bundle != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(bundle);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"error\": \"No bundle found with the given ID\"}");
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"error\": \"Failed to retrieve the bundle\"}");
+    }
+}
 
 	// TODO: Task 6
 

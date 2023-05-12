@@ -1,0 +1,12 @@
+<div *ngIf="bundle">
+    <h1>{{ bundle.title }}</h1>
+    <h2>Uploaded by {{ bundle.name }}</h2>
+    <p>{{ bundle.date | date }}</p>
+    <p>{{ bundle.comments }}</p>
+    
+    <div *ngFor="let url of bundle.urls">
+      <img [src]="url" alt="Image from bundle">
+    </div>
+  
+    <button (click)="onBack()">Back</button>
+  </div>
