@@ -37,7 +37,7 @@ public class UploadController {
     
     Upload upload = new Upload(name, title, comments, file);
     
-    List<String> urls = new ArrayList<>(); // This should contain URLs of uploaded images to S3
+    List<String> urls = new ArrayList<>();
 
     try {
             urls = imageRepository.upload(upload);

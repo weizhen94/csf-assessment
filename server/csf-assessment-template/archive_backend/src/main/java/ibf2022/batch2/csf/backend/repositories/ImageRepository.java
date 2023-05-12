@@ -51,7 +51,6 @@ public class ImageRepository {
 			metadata.setContentType(determineContentType(fileName));
 			s3Client.putObject(bucketName, fileName, new FileInputStream(tempFile), metadata);
 	
-			// Add the URL of the uploaded image to the list
 			String imageUrl = s3Client.getUrl(bucketName, fileName).toString();
 			urls.add(imageUrl);
 	
