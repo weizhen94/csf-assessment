@@ -1,0 +1,7 @@
+<div *ngFor="let bundle of bundles">
+    <h2>{{ bundle.title }}</h2>
+    <p>{{ bundle.date }}</p>
+    <button (click)="goToDisplay(bundle.bundleId)">View</button>
+  </div>
+  <button (click)="goToUpload()">Upload</button>
+  

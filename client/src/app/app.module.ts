@@ -7,13 +7,15 @@ import { UploadComponent } from './components/upload.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DisplayComponent } from './components/display.component';
+import { LandingComponent } from './components/landing.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     UploadComponent,
-    DisplayComponent
+    DisplayComponent,
+    LandingComponent
   ],
   imports: [
     BrowserModule,

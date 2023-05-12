@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DisplayService } from '../services/display.service';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-display',
@@ -10,7 +11,7 @@ import { DisplayService } from '../services/display.service';
 export class DisplayComponent implements OnInit {
   bundle: any;
 
-  constructor(private route: ActivatedRoute, private router: Router, private displayService: DisplayService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private displayService: DisplayService, private dataService: DataService) { }
 
   ngOnInit(): void {
     const bundleId = this.route.snapshot.paramMap.get('bundleId');
@@ -23,6 +24,7 @@ export class DisplayComponent implements OnInit {
   }
 
   onBack() {
-    this.router.navigate(['/']);
+    this.dataService.changeBundle(this.bundle);
+    this.router.navigate(['/landing']);
   }
 }

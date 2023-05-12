@@ -5,8 +5,14 @@ import java.util.List;
 import java.util.UUID;
 
 import org.bson.Document;
+
+import org.springframework.data.domain.Sort;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
+import org.springframework.data.mongodb.core.aggregation.ProjectionOperation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
@@ -69,11 +75,33 @@ public class ArchiveRepository {
 	// You are free to change the parameter and the return type
 	// Do not change the method's name
 	// Write the native mongo query that you will be using in this method
-	//
-	//
-	public Object getBundles(/* any number of parameters here */) {
-		return null;
-	}
-
+	/*
+	db.archives.aggregate([
+	{
+    $project: {
+      title: 1,
+      date: 1,
+    },
+  },
+  {
+    $sort: {
+      date: -1,
+      title: 1,
+    },
+  },
+]);
+	 */
+	public List<Document> getBundles() {
+		ProjectionOperation projectionOperation = Aggregation.project("title", "date");
+		Aggregation aggregation = Aggregation.newAggregation(
+				projectionOperation,
+				Aggregation.sort(Sort.Direction.DESC, "date"),
+				Aggregation.sort(Sort.Direction.ASC, "title")
+		);
+	
+		AggregationResults<Document> results = mongoTemplate.aggregate(aggregation, "archives", Document.class);
+	
+		return results.getMappedResults();
+	}	
 
 }

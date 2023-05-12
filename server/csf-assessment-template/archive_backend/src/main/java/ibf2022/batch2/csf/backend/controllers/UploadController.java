@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -71,5 +72,19 @@ public class UploadController {
 }
 
 	// TODO: Task 6
+	@GetMapping("/bundles")
+    public ResponseEntity<List<Document>> getBundles() {
+    try {
+        List<Document> bundles = archiveRepository.getBundles();
+        if (bundles != null && !bundles.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.OK).body(bundles);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
+}
 
 }
